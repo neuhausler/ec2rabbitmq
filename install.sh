@@ -26,29 +26,25 @@ adduser --system --home /usr/local/var/lib/rabbitmq -M --shell /bin/bash --comme
 # change file ownership
 chown -R rabbitmq:rabbitmq /usr/local/var/log/rabbitmq /usr/local/var/lib/rabbitmq /usr/local/var/run/rabbitmq
 
-# download changed startup file
-git clone git://gist.github.com/1545444.git
-cp 1545444/rabbitmq-server /usr/local/lib/rabbitmq/sbin/rabbitmq-server
+# copy changed startup file
+cp rabbitmq-server /usr/local/lib/rabbitmq/sbin/rabbitmq-server
 
-# download changed plugin activation file
-git clone git://gist.github.com/1545558.git
-cp 1545558/rabbitmq-plugins /usr/local/lib/rabbitmq/sbin/rabbitmq-plugins
+# copy changed plugin activation file
+cp rabbitmq-plugins /usr/local/lib/rabbitmq/sbin/rabbitmq-plugins
 
-# download changed env file
-git clone git://gist.github.com/1548054.git
-cp 1548054/rabbitmq-env /usr/local/lib/rabbitmq/sbin/rabbitmq-env
+# copy changed env file
+cp rabbitmq-env /usr/local/lib/rabbitmq/sbin/rabbitmq-env
+
+# download init.d script
+cp rabbitmq-server-initd /usr/local/etc/rc.d/rabbitmq-server
+chmod 0755 /usr/local/etc/rc.d/rabbitmq-server
+ln -s /usr/local/etc/rc.d/rabbitmq-server /etc/init.d/rabbitmq-server
 
 # install management plugin
 export PATH=$PATH:/usr/local/bin/
 cd /usr/local/lib/rabbitmq
 ./sbin/rabbitmq-plugins enable rabbitmq_management
 cd $BUILD_DIR
-
-# download init.d script
-git clone git://gist.github.com/1547956.git
-cp 1547956/rabbitmq-server /usr/local/etc/rc.d/rabbitmq-server
-chmod 0755 /usr/local/etc/rc.d/rabbitmq-server
-ln -s /usr/local/etc/rc.d/rabbitmq-server /etc/init.d/rabbitmq-server
 
 
 # done!
